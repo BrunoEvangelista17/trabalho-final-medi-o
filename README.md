@@ -82,112 +82,269 @@ Gerentes de projeto frequentemente enfrentam dúvidas sobre qual estratégia de 
 | **RQ3 (Retrabalho)** | `sqale_rating` | Nota de manutenibilidade baseada no índice SQALE. | SonarQube |
 | **Geral** | `ncloc` | Linhas de código não comentadas (para dimensionamento). | SonarQube |
 
-Com certeza. Aqui está o Plano de Experimento reestruturado com base no PDF, sem as citações:
+---
 
-#### 4. Escopo e contexto do experimento
-* **4.1 Escopo funcional:** Mineração de dados de repositórios públicos e análise estática de código. Exclui projetos que não atendem aos critérios de popularidade e atividade definidos.
-* **4.2 Contexto do estudo:** 1400 repositórios do GitHub (top stars), abrangendo diversos domínios, analisados via automação.
-* **4.3 Premissas:** Assume-se que as métricas do SonarQube são indicadores válidos de qualidade e segurança e que a mediana de tempo de release reflete a estratégia do projeto.
-* **4.4 Restrições:** Limitações da API do GitHub e capacidade de processamento para clonar/analisar 1400 repositórios.
-* **4.5 Limitações previstas:** A análise é puramente estática e baseada em dados históricos; não avalia a funcionalidade dinâmica ou a satisfação do usuário final.
+## 4. Escopo e contexto do experimento
 
-#### 5. Stakeholders e impacto esperado
-* **5.1 Stakeholders principais:** Gerentes de projeto de software, engenheiros de release e pesquisadores da área.
-* **5.2 Interesses e expectativas:** Obter uma visão organizada dos impactos das estratégias para fundamentar decisões sobre o ciclo de lançamentos.
-* **5.3 Impactos potenciais:** Fornecer evidências de que *rapid releases* podem exigir maior rigor de qualidade para evitar acúmulo de bugs e dívida técnica.
+### 4.1 Escopo funcional / de processo
+* **Incluído:** Mineração de dados em massa via API do GitHub, clonagem de repositórios e análise estática de código automatizada utilizando a ferramenta SonarQube.
+* **Excluído:** Repositórios que não atendem aos critérios mínimos de popularidade e atividade (número de stars, forks e colaboradores) definidos nos filtros.
 
-#### 6. Riscos de alto nível, premissas e critérios de sucesso
-* **6.1 Riscos de alto nível:** Falha na mineração dos dados (mudanças na API), inconclusividade estatística entre os grupos, ou dados "ruidosos" em repositórios open-source.
-* **6.2 Critérios de sucesso globais:** Capacidade de classificar os repositórios em RR e SR e obter diferenças estatísticas observáveis nas métricas de qualidade.
-* **6.3 Critérios de parada antecipada:** Incapacidade de coletar um dataset significativo (mínimo definido de repositórios válidos) que atenda aos filtros.
+### 4.2 Contexto do estudo
+* **Organização:** Pesquisa acadêmica (PUC-Minas) focada em dados públicos.
+* **Alvo:** Projetos *open-source* hospedados na plataforma GitHub.
+* **Tipo de Análise:** Estudo observacional (*ex-post facto*) baseado no histórico de *releases* e na qualidade atual do código.
 
-#### 7. Modelo conceitual e hipóteses
-* **7.1 Modelo conceitual:** O tempo entre releases (variável independente) influencia a acumulação de defeitos e vulnerabilidades (variáveis dependentes) devido à pressão de tempo ou frequência de feedback.
-* **7.2 Hipóteses formais:**
-    * **H1,1 (Alternativa):** Projetos RR são significativamente mais vulneráveis que projetos SR.
-    * **H1,2 (Alternativa):** Erros são significativamente mais comuns em projetos RR que em SR.
-    * **H1,3 (Alternativa):** O retrabalho é significativamente maior em projetos RR que em SR.
-* **7.3 Nível de significância:** O estudo busca identificar "diferença significativa", implicitamente seguindo padrões acadêmicos (geralmente p < 0.05).
+### 4.3 Premissas
+* A mediana do tempo entre *releases* é um indicador válido para categorizar a estratégia de desenvolvimento de um projeto (Rápida vs. Lenta).
+* As métricas fornecidas pelo SonarQube (como *Security Rating* e *Reliability Rating*) são indicadores confiáveis da qualidade real do software.
 
-#### 8. Variáveis, fatores, tratamentos e objetos de estudo
-* **8.1 Objetos de estudo:** Repositórios de código fonte no GitHub.
-* **8.2 Sujeitos / participantes:** Não se aplica (estudo de artefatos de software).
-* **8.3 Variáveis independentes:** Tipo de Ciclo de Release.
-* **8.4 Tratamentos:**
-    * *Grupo 1 (Rapid Release - RR):* Mediana de releases entre 5 e 35 dias.
-    * *Grupo 2 (Slow Release - SR):* Mediana de releases $\geq$ 50 dias.
-* **8.5 Variáveis dependentes:** Métricas de Vulnerabilidades, Bugs, Code Smells e Dívida Técnica.
-* **8.6 Variáveis de controle / bloqueio:** Filtros de popularidade (stars) e atividade (forks, colaboradores) para garantir relevância dos projetos.
+### 4.4 Restrições
+* Dependência da disponibilidade e dos limites de taxa (*rate limits*) da API GraphQL do GitHub.
+* Capacidade computacional para clonar e processar a análise estática de 1.400 repositórios.
 
-#### 9. Desenho experimental
-* **9.1 Tipo de desenho:** Estudo Observacional Comparativo (Ex-post facto), baseado em Mineração de Repositórios de Software (MSR).
-* **9.2 Randomização e alocação:** Não há randomização de tratamento (os projetos já escolheram suas estratégias). A seleção é baseada em critérios pré-definidos aplicados a um ranking.
-* **9.3 Balanceamento:** O estudo busca os "top" repositórios e depois filtra, resultando em grupos formados naturalmente pelos dados minerados.
-* **9.4 Número de grupos:** Dois grupos principais de comparação (Rapid vs. Slow).
+### 4.5 Limitações previstas
+* O estudo baseia-se puramente em análise estática; não são realizados testes dinâmicos ou funcionais.
+* Os resultados refletem o contexto de projetos *open-source*, podendo não ser totalmente generalizáveis para ambientes corporativos fechados com processos diferentes.
 
-#### 10. População, sujeitos e amostragem
-* **10.1 População-alvo:** Projetos de software Open Source relevantes.
-* **10.2 Critérios de inclusão:** Top 1400 repositórios por *stars*, 50+ forks, 50+ stars, mínimo de 19 colaboradores e 19 releases.
-* **10.3 Critérios de exclusão:** Repositórios que não se encaixam nas janelas de mediana de release definidas ou que não possuem dados suficientes.
-* **10.4 Tamanho da amostra planejado:** Mineração inicial de 5000 repositórios para filtrar os top 1400 elegíveis.
-* **10.5 Método de seleção:** Amostragem intencional baseada em ranking de popularidade (stars).
-* **10.6 Treinamento:** Não aplicável.
+---
 
-#### 11. Instrumentação e protocolo operacional
-* **11.1 Instrumentos de coleta:** Script em Python para mineração (GitHub GraphQL API) e Ferramenta SonarQube para análise estática.
-* **11.2 Materiais de suporte:** Documentação da API do GitHub e manuais de métricas do SonarQube.
-* **11.3 Procedimento experimental:**
-    1.  Minerar top 1400 repositórios via API.
-    2.  Filtrar dados e classificar em RR ou SR.
-    3.  Clonar repositórios (Git).
-    4.  Executar análise do SonarQube.
-    5.  Salvar métricas em CSV e analisar estatisticamente.
-* **11.4 Plano de piloto:** Teste inicial dos scripts de mineração para validar a coleta dos dados JSON.
+## 5. Stakeholders e impacto esperado
 
-#### 12. Plano de análise de dados
-* **12.1 Estratégia geral:** Comparar as distribuições das métricas de qualidade entre os grupos RR e SR para validar ou refutar as hipóteses.
-* **12.2 Métodos estatísticos planejados:** Cálculo de medianas, uso de Boxplots para visualização de distribuição e dispersão (quartis).
-* **12.3 Tratamento de dados faltantes:** Repositórios sem dados suficientes de releases ou colaboradores são filtrados antes da análise.
-* **12.4 Análise qualitativa:** Interpretação dos resultados à luz da literatura de Engenharia de Release.
+### 5.1 Stakeholders principais
+* Gerentes de projeto de software.
+* Engenheiros de software e equipes de DevOps.
+* Pesquisadores acadêmicos na área de Engenharia de Software.
 
-#### 13. Avaliação de validade
-* **13.1 Validade de conclusão:** Garantida pelo tamanho da amostra (1400 repositórios) e uso de métricas padronizadas.
-* **13.2 Validade interna:** Controle de variáveis de confusão através de critérios rígidos de inclusão (tamanho do projeto, número de colaboradores).
-* **13.3 Validade de constructo:** Uso de ferramenta de mercado (SonarQube) amplamente aceita para mensurar "Qualidade" e "Dívida Técnica".
-* **13.4 Validade externa:** Resultados focados em Open Source; generalização para ambientes industriais fechados deve ser feita com cautela.
+### 5.2 Interesses e expectativas dos stakeholders
+* **Gerentes:** Necessitam de dados para apoiar a decisão sobre qual estratégia de *release* adotar, compreendendo os riscos de cada uma.
+* **Pesquisadores:** Buscam evidências empíricas que relacionem práticas de engenharia de *release* com a qualidade do produto final.
 
-#### 14. Ética, privacidade e conformidade
-* **14.1 Questões éticas:** Uso de dados públicos de repositórios Open Source.
-* **14.2 Consentimento:** Não necessário (dados públicos).
-* **14.3 Privacidade:** O estudo foca em métricas de código, não em dados pessoais sensíveis dos desenvolvedores.
-* **14.4 Aprovações:** Aprovação acadêmica do departamento da PUC-Minas.
+### 5.3 Impactos potenciais no processo / produto
+* Evidenciar que a escolha da estratégia de *release* impacta diretamente custos de manutenção e segurança.
+* Incentivar a adoção de práticas de qualidade mais rigorosas em projetos que optam por ciclos rápidos (*rapid releases*).
 
-#### 15. Recursos, infraestrutura e orçamento
-* **15.1 Recursos humanos:** 4 pesquisadores/autores.
-* **15.2 Infraestrutura técnica:** Máquinas para execução de scripts Python, armazenamento de JSON/CSV, ambiente com Git e servidor SonarQube instalado.
-* **15.3 Materiais:** Acesso à Internet e Tokens de API do GitHub.
-* **15.4 Orçamento:** Custos operacionais de pesquisa acadêmica (infraestrutura computacional e horas de pesquisa).
+---
 
-#### 16. Cronograma, marcos e riscos operacionais
-* **16.1 Marcos:** 1. Desenvolvimento do Script de Mineração; 2. Coleta e Filtragem (Dataset JSON); 3. Análise SonarQube (Processamento em lote); 4. Redação do Artigo.
-* **16.2 Dependências:** A análise (SonarQube) depende da conclusão e limpeza da mineração de dados.
-* **16.3 Riscos operacionais:** Bloqueio da API do GitHub (Rate Limit) ou falhas na clonagem de repositórios grandes.
+## 6. Riscos de alto nível, premissas e critérios de sucesso
 
-#### 17. Governança do experimento
-* **17.1 Papéis:** Autores conduzem a execução e análise; Orientadores/Revisores validam a metodologia.
-* **17.2 Ritos:** Reuniões de acompanhamento do grupo de pesquisa.
-* **17.3 Controle de mudanças:** Ajustes nos filtros de seleção (ex: número de stars) documentados no script de filtragem.
+### 6.1 Riscos de alto nível
+* Inconsistência nos dados minerados do GitHub (ex: repositórios apagados ou metadados incompletos).
+* Dificuldade em classificar claramente os projetos nas janelas de tempo definidas (5-35 dias vs. >50 dias).
 
-#### 18. Plano de documentação e reprodutibilidade
-* **18.1 Repositórios:** Scripts e Datasets salvos em formatos JSON e CSV.
-* **18.2 Artefatos padrão:** Scripts Python para mineração e análise automatizada.
-* **18.3 Empacotamento:** O estudo visa complementar a literatura existente, sugerindo a disponibilização dos dados gerados.
+### 6.2 Critérios de sucesso globais
+* Consegui processar uma amostra significativa (1.400 repositórios).
+* Identificar diferenças estatísticas ou tendências claras entre os grupos RR e SR nas métricas de qualidade.
 
-#### 19. Plano de comunicação
-* **19.1 Públicos:** Comunidade acadêmica e gestores de projeto.
-* **19.2 Canais:** Publicação de artigo científico.
-* **19.3 Mensagem chave:** Rapid releases exigem maior atenção à qualidade para evitar degradação do código.
+### 6.3 Critérios de parada antecipada
+* Falha crítica na coleta de dados que impeça a obtenção de um volume mínimo de repositórios para análise estatística.
 
-#### 20. Critérios de prontidão para execução
-* **20.1 Checklist:** Scripts de mineração testados? Ambiente SonarQube configurado? Critérios de filtro (RR vs SR) definidos?
-* **20.2 Aprovação final:** Validação da metodologia pelos autores antes do início da mineração em larga escala.
+---
+
+## 7. Modelo conceitual e hipóteses
+
+### 7.1 Modelo conceitual do experimento
+A frequência de lançamentos (variável independente) influencia a qualidade interna do código (variável dependente), afetando a probabilidade de inserção de vulnerabilidades, a densidade de bugs e o acúmulo de dívida técnica.
+
+### 7.2 Hipóteses formais
+* **Vulnerabilidade (H1):**
+    * $H_{0,1}$: Não há diferença significativa na vulnerabilidade entre projetos de Release Rápida (RRC) e Release Lenta (SL).
+    * $H_{1,1}$: Projetos RRC são significativamente mais vulneráveis que projetos SL.
+* **Erros (H2):**
+    * $H_{0,2}$: Não há diferença significativa na ocorrência de erros entre RRC e SL.
+    * $H_{1,2}$: Erros são significativamente mais comuns em projetos RRC que em SL.
+* **Retrabalho (H3):**
+    * $H_{0,3}$: Não há diferença significativa no retrabalho (Dívida Técnica) entre RRC e SL.
+    * $H_{1,3}$: O retrabalho é significativamente maior em projetos RRC que em SL.
+
+### 7.3 Nível de significância e considerações de poder
+* O estudo busca validar se as diferenças de médias/medianas entre os grupos são "significativas", utilizando métricas estatísticas descritivas (boxplot, mediana) para suportar as conclusões.
+
+---
+
+## 8. Variáveis, fatores, tratamentos e objetos de estudo
+
+### 8.1 Objetos de estudo
+* Repositórios de código-fonte minerados do GitHub.
+
+### 8.2 Sujeitos / participantes
+* Não aplicável (estudo de artefatos de software).
+
+### 8.3 Variáveis independentes (fatores)
+* **Tipo de Ciclo de Release:** Variável categórica binária (Rapid Release vs. Slow Release).
+
+### 8.4 Tratamentos (condições experimentais)
+* **Grupo RR (Rapid Release):** Mediana de tempo entre releases entre 5 e 35 dias.
+* **Grupo SR (Slow Release):** Mediana de tempo entre releases de 50 dias ou mais.
+
+### 8.5 Variáveis dependentes (respostas)
+* **Métricas de Segurança:** Vulnerabilidades, *Security Rating*.
+* **Métricas de Confiabilidade:** Bugs, *Reliability Rating*, *Code Smells*.
+* **Métricas de Manutenibilidade:** *Sqale Index* (Dívida Técnica), Densidade de Linhas Duplicadas, *Sqale Rating*.
+
+### 8.6 Variáveis de controle / bloqueio
+* Popularidade (*Stars*).
+* Tamanho da comunidade (Colaboradores, *Forks*).
+* Maturidade do projeto (Número mínimo de *releases*).
+
+---
+
+## 9. Desenho experimental
+
+### 9.1 Tipo de desenho
+Estudo empírico de Mineração de Repositórios de Software (MSR), comparativo e quantitativo.
+
+### 9.2 Randomização e alocação
+Seleção baseada em ranking (Top Stars) com alocação nos grupos de tratamento determinada pelas características históricas do próprio repositório (data das *releases*).
+
+### 9.3 Balanceamento
+Os grupos são formados após a filtragem dos 5.000 repositórios iniciais, resultando nos 1.400 mais relevantes divididos conforme sua cadência.
+
+### 9.4 Número de grupos
+Dois grupos de comparação: Rápido e Lento.
+
+---
+
+## 10. População, sujeitos e amostragem
+
+### 10.1 População-alvo
+Projetos de software *open-source* ativos e relevantes na comunidade global.
+
+### 10.2 Critérios de inclusão de sujeitos
+* Estar entre os top 1400 repositórios em número de *stars*.
+* Possuir mais de 50 *forks*.
+* Possuir mais de 50 *stars*.
+* Possuir no mínimo 19 colaboradores e histórico de *releases*.
+
+### 10.3 Critérios de exclusão de sujeitos
+* Projetos com métricas de release inconclusivas ou que caem no intervalo entre 35 e 50 dias (zona cinzenta não analisada).
+
+### 10.4 Tamanho da amostra planejado
+* Mineração inicial: 5.000 repositórios.
+* Amostra final processada: 1.400 repositórios.
+
+### 10.5 Método de seleção / recrutamento
+Automação via scripts Python utilizando a API do GitHub.
+
+---
+
+## 11. Instrumentação e protocolo operacional
+
+### 11.1 Instrumentos de coleta
+* **Python Scripts:** Para consulta à API GraphQL do GitHub e filtragem dos dados JSON.
+* **Git:** Ferramenta de versionamento para clonar os códigos.
+* **SonarQube:** Ferramenta de análise estática para gerar as métricas de qualidade.
+
+### 11.2 Materiais de suporte
+* Dataset de referência "RapidRelease" (Joshi and Chimalakonda).
+
+### 11.3 Procedimento experimental (Protocolo passo a passo)
+1.  **Obter dados:** Consumir API do GitHub para buscar os top 5000 repositórios.
+2.  **Filtrar:** Aplicar critérios de inclusão e calcular medianas de release para classificar os projetos.
+3.  **Salvar Dataset:** Gerar arquivo JSON com os repositórios selecionados.
+4.  **Preparação:** Configurar ambiente de análise.
+5.  **Processamento:** Iterar sobre o JSON, clonar cada repositório e executar o *scanner* do SonarQube.
+6.  **Exportação:** Salvar os resultados das métricas em formato .CSV para análise.
+
+---
+
+## 12. Plano de análise de dados
+
+### 12.1 Estratégia geral de análise
+Análise comparativa direta entre as medianas e distribuições das métricas dos dois grupos (RR e SR).
+
+### 12.2 Métodos estatísticos planejados
+* Cálculo de medianas para métricas absolutas (bugs, code smells, dívida técnica).
+* Visualização através de Boxplots para entender a dispersão (quartis).
+* Comparação percentual de *Ratings* (escalas de 1 a 5).
+
+### 12.3 Tratamento de dados faltantes e outliers
+* A visualização dos dados foca nos "75% inferiores", indicando tratamento para remover o ruído de *outliers* extremos que poderiam distorcer a análise.
+
+---
+
+## 13. Avaliação de validade
+
+### 13.1 Validade de conclusão
+Assegurada pelo volume da amostra (1.400 projetos), permitindo inferências estatísticas sobre o comportamento dos grupos.
+
+### 13.2 Validade interna
+Mitigada pelo uso de critérios rigorosos de seleção (tamanho e atividade do projeto) para garantir que estamos comparando projetos de relevância similar.
+
+### 13.3 Validade de constructo
+Uso de ferramenta padrão de mercado (SonarQube) cujas métricas (como SQALE Index) são amplamente aceitas como *proxies* para qualidade técnica.
+
+### 13.4 Validade externa
+Os resultados são válidos para o ecossistema *open-source*; a generalização para contextos industriais privados deve considerar as diferenças nos processos de desenvolvimento.
+
+---
+
+## 14. Ética, privacidade e conformidade
+
+### 14.1 Questões éticas
+O estudo utiliza apenas dados públicos de repositórios de código, sem envolver experimentação direta com seres humanos ou dados sensíveis.
+
+### 14.3 Privacidade e proteção de dados
+Os dados coletados referem-se a métricas de código e metadados públicos de projetos, respeitando os termos de uso da plataforma GitHub.
+
+---
+
+## 15. Recursos, infraestrutura e orçamento
+
+### 15.1 Recursos humanos
+Equipe de quatro pesquisadores/autores.
+
+### 15.2 Infraestrutura técnica necessária
+* Acesso à internet e chaves de API do GitHub.
+* Máquinas para execução dos scripts de mineração e do servidor SonarQube.
+* Ferramentas de BI para visualização dos dados.
+
+### 15.3 Materiais e insumos
+* Base de conhecimento acadêmica sobre Engenharia de Release.
+
+---
+
+## 16. Cronograma, marcos e riscos operacionais
+
+### 16.1 Marcos principais
+1.  Desenvolvimento dos scripts de mineração.
+2.  Coleta e filtragem dos dados (Geração do JSON).
+3.  Execução da análise estática (SonarQube).
+4.  Consolidação dos dados em CSV e análise dos resultados.
+5.  Redação final do artigo.
+
+---
+
+## 17. Governança do experimento
+
+### 17.1 Papéis e responsabilidades
+Os autores do estudo dividem as tarefas de implementação dos scripts, execução da análise e interpretação dos dados estatísticos.
+
+---
+
+## 18. Plano de documentação e reprodutibilidade
+
+### 18.1 Repositórios e convenções
+Armazenamento dos dados brutos em JSON e dados processados em CSV.
+
+### 18.3 Plano de empacotamento
+A metodologia é descrita detalhadamente (parâmetros de filtro, ferramentas usadas) para permitir que outros pesquisadores repliquem a mineração e análise.
+
+---
+
+## 19. Plano de comunicação
+
+### 19.1 Públicos e mensagens-chave
+O estudo visa comunicar à comunidade de engenharia de software que, embora *releases* rápidas sejam tendência, elas exigem maior cuidado com a dívida técnica e bugs do que estratégias mais conservadoras.
+
+### 19.2 Canais
+Publicação de artigo em conferência/periódico acadêmico.
+
+---
+
+## 20. Critérios de prontidão para execução
+
+### 20.1 Checklist de prontidão
+* Scripts de automação validados.
+* Critérios de classificação (5-35 dias vs 50+ dias) definidos.
+* Ambiente de análise estática operacional.

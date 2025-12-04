@@ -364,7 +364,9 @@ A metodologia é descrita detalhadamente (parâmetros de filtro, ferramentas usa
 O estudo visa comunicar à comunidade de engenharia de software que tende a cada vez mais agilizar os ciclos de desenvolvimento, mostrando qual que é o verdadeiro efeito que o tempo de desenvolvimento tem sobre o código.
 
 ### 19.2 Canais
-Publicação de artigo em conferência/periódico acadêmico ~~através da apresentação do trabalho interdisciplinar 6~~.
+Publicação de artigo em conferência/periódico acadêmico.
+
+---
 
 ### 20. Metodologia
 

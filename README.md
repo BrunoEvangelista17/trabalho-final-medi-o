@@ -1,4 +1,4 @@
-# Definição de Experimento: Análise de Estratégias de Release e Qualidade de Código
+p# Definição de Experimento: Análise de Estratégias de Release e Qualidade de Código
 
 ## 1. Identificação básica
 
@@ -314,18 +314,18 @@ Aqui está a **versão simplificada**, consolidada em **uma única seção**, co
 
 ---
 
-## **18.2 Templates e artefatos padrão**
+### **18.2 Templates e artefatos padrão**
 
 O experimento utiliza um conjunto reduzido e padronizado de artefatos para garantir reprodutibilidade e consistência dos processos. Os principais são:
 
-### **1. Checklists e modelos**
+#### **1. Checklists e modelos**
 
 * **Checklist de Preparação do Ambiente:** valida instalação e configuração de Python, Git e SonarQube.
 * **Template de Validação dos Dados:** usado para verificar integridade dos CSVs gerados.
 
 ---
 
-### **2. Scripts principais**
+#### **2. Scripts principais**
 
 * **Coleta e Mineração (`miner_github.py`)** – consulta a API e aplica filtros.
 * **Classificação das Releases (`process_releases.py`)** – calcula medianas e define RR ou SR.

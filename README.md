@@ -5,26 +5,13 @@
 ### 1.1 Título do experimento
 Análise Comparativa de Repositórios com Releases Rápidos e Lentos: Implicações para a Qualidade do Código.
 
-### 1.2 ID / código
-*Não informado no documento original.* (Referência interna sugerida: Artigo PUC-Minas).
-
-### 1.3 Versão do documento e histórico de revisão
-* **Versão Atual:** Publicação Final (Artigo Acadêmico).
-* **Histórico:** O estudo baseou-se em mineração de dados inicial, seguida de filtragem e processamento final com análise estática para a redação do artigo.
-
-### 1.4 Datas (criação, última atualização)
-*Não informadas explicitamente.* O estudo utiliza referências bibliográficas até o ano de 2019.
-
-### 1.5 Autores (nome, área, contato)
+### 1.2 Autores (nome, área, contato)
 * **Alfredo L. Vieira** (Departamento de Engenharia de Software e Sistemas da Informação - PUC-Minas).
 * **Bruno E. Gomes de Azevedo** (Departamento de Engenharia de Software e Sistemas da Informação - PUC-Minas).
 * **Estevão de F. Rodrigues** (Departamento de Engenharia de Software e Sistemas da Informação - PUC-Minas).
 * **Vinícius S. de Oliveira** (Departamento de Engenharia de Software e Sistemas da Informação - PUC-Minas).
 
-### 1.6 Responsável principal (PI / dono do experimento)
-Grupo de pesquisa da Pontifícia Universidade Católica de Minas Gerais (PUC-Minas).
-
-### 1.7 Projeto / produto / iniciativa relacionada
+### 1.3 Projeto / produto / iniciativa relacionada
 Pesquisa acadêmica sobre Engenharia de Software, focada em estratégias de *release* (lançamento) e qualidade de software em projetos *open-source*.
 
 ---
@@ -36,7 +23,7 @@ Gerentes de projeto frequentemente enfrentam dúvidas sobre qual estratégia de 
 
 ### 2.2 Contexto organizacional e técnico
 * **Ambiente:** Projetos *open-source* hospedados no GitHub.
-* **Amostra:** 1.400 repositórios minerados (Top stars, >50 forks, >19 colaboradores).
+* **Amostra:** 2000 repositórios minerados (Top stars, >50 forks, >19 colaboradores).
 * **Tecnologias/Ferramentas:** API GraphQL do GitHub para mineração, scripts em Python para automação e filtragem, e SonarQube para análise estática de código.
 
 ### 2.3 Trabalhos e evidências prévias (internos e externos)

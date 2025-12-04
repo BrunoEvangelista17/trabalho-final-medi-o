@@ -365,3 +365,7 @@ O estudo visa comunicar à comunidade de engenharia de software que tende a cada
 
 ### 19.2 Canais
 Publicação de artigo em conferência/periódico acadêmico ~~através da apresentação do trabalho interdisciplinar 6~~.
+
+### 20. Metodologia
+
+[![metodologia](https://github.com/BrunoEvangelista17/trabalho-final-medi-o/blob/main/image.png)](https://github.com/BrunoEvangelista17/trabalho-final-medi-o/blob/main/image.png)

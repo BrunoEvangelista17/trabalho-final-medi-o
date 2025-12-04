@@ -75,15 +75,15 @@ Gerentes de projeto frequentemente enfrentam dúvidas sobre qual estratégia de 
 ### 4.2 Contexto do estudo
 * **Organização:** Pesquisa acadêmica (PUC-Minas) focada em dados públicos.
 * **Alvo:** Projetos *open-source* hospedados na plataforma GitHub.
-* **Tipo de Análise:** Estudo observacional (*ex-post facto*) baseado no histórico de *releases* e na qualidade atual do código.
+* **Tipo de Análise:** Estudo que observa e analisa o histórico de *releases* e a qualidade atual do código.
 
 ### 4.3 Premissas
-* A mediana do tempo entre *releases* é um indicador válido para categorizar a estratégia de desenvolvimento de um projeto (Rápida vs. Lenta).
+* A ~~média~~ mediana do tempo entre *releases* é um indicador válido para categorizar a estratégia de desenvolvimento de um projeto (Rápida vs. Lenta).
 * As métricas fornecidas pelo SonarQube (como *Security Rating* e *Reliability Rating*) são indicadores confiáveis da qualidade real do software.
 
 ### 4.4 Restrições
 * Dependência da disponibilidade e dos limites de taxa (*rate limits*) da API GraphQL do GitHub.
-* Capacidade computacional para clonar e processar a análise estática de 1.400 repositórios.
+* Capacidade computacional para clonar e processar a análise estática de 2.000 repositórios.
 
 ### 4.5 Limitações previstas
 * O estudo baseia-se puramente em análise estática; não são realizados testes dinâmicos ou funcionais.
@@ -120,7 +120,7 @@ Gerentes de projeto frequentemente enfrentam dúvidas sobre qual estratégia de 
 * Identificar diferenças estatísticas ou tendências claras entre os grupos RR e SR nas métricas de qualidade.
 
 ### 6.3 Critérios de parada antecipada
-* Não ter repositórios suficientes para a análise de Rapid e Slow release. (2000 repositórios -> 1400 repositórios)
+* Não ter repositórios suficientes para a análise de Rapid e Slow release. (2.000 repositórios -> 1.400 repositórios)
 
 ---
 

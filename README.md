@@ -46,11 +46,6 @@ Gerentes de projeto frequentemente enfrentam dúvidas sobre qual estratégia de 
 * **An Empirical Evaluation... Technical Debt and Software Security:** Relacionou dívida técnica com falhas de segurança.
 * **Impact of Continuous Integration... (Bhattacharya):** Evidenciou que CI aumenta a qualidade ao detectar erros cedo.
 
-### 2.4 Referencial teórico e empírico essencial
-* **Rapid Release (RR):** Projetos com mediana de tempo entre releases inferior a 35 dias.
-* **Slow Release (SR):** Projetos com mediana de tempo entre releases igual ou superior a 50 dias.
-* **Aspectos de Qualidade:** O estudo fundamenta-se na análise de três pilares: vulnerabilidades, erros (bugs e *code smells*) e retrabalho (dívida técnica).
-
 ---
 
 ## 3. Objetivos e questões (Goal / Question / Metric)
@@ -130,14 +125,15 @@ Gerentes de projeto frequentemente enfrentam dúvidas sobre qual estratégia de 
 
 ### 6.1 Riscos de alto nível
 * Inconsistência nos dados minerados do GitHub (ex: repositórios apagados ou metadados incompletos).
-* Dificuldade em classificar claramente os projetos nas janelas de tempo definidas (5-35 dias vs. >50 dias).
+* Saber diferênciar uma release completa de hotfix ou outras mudanças menores
+* Dificuldade de encontrar repositórios de Slow Release
 
 ### 6.2 Critérios de sucesso globais
-* Consegui processar uma amostra significativa (1.400 repositórios).
+* Consegui processar uma amostra significativa.
 * Identificar diferenças estatísticas ou tendências claras entre os grupos RR e SR nas métricas de qualidade.
 
 ### 6.3 Critérios de parada antecipada
-* Falha crítica na coleta de dados que impeça a obtenção de um volume mínimo de repositórios para análise estatística.
+* Não ter repositórios suficientes para a análise de Rapid e Slow release. (2000 repositórios -> 1400 repositórios)
 
 ---
 
@@ -198,7 +194,7 @@ Estudo empírico de Mineração de Repositórios de Software (MSR), comparativo 
 Seleção baseada em ranking (Top Stars) com alocação nos grupos de tratamento determinada pelas características históricas do próprio repositório (data das *releases*).
 
 ### 9.3 Balanceamento
-Os grupos são formados após a filtragem dos 5.000 repositórios iniciais, resultando nos 1.400 mais relevantes divididos conforme sua cadência.
+Os grupos são formados após a filtragem dos 15.000 repositórios iniciais, resultando nos 1.400 mais relevantes divididos conforme sua cadência.
 
 ### 9.4 Número de grupos
 Dois grupos de comparação: Rápido e Lento.
@@ -220,7 +216,7 @@ Projetos de software *open-source* ativos e relevantes na comunidade global.
 * Projetos com métricas de release inconclusivas ou que caem no intervalo entre 35 e 50 dias (zona cinzenta não analisada).
 
 ### 10.4 Tamanho da amostra planejado
-* Mineração inicial: 5.000 repositórios.
+* Mineração inicial: 15.000 repositórios. 
 * Amostra final processada: 1.400 repositórios.
 
 ### 10.5 Método de seleção / recrutamento
@@ -259,7 +255,7 @@ Análise comparativa direta entre as medianas e distribuições das métricas do
 * Comparação percentual de *Ratings* (escalas de 1 a 5).
 
 ### 12.3 Tratamento de dados faltantes e outliers
-* A visualização dos dados foca nos "75% inferiores", indicando tratamento para remover o ruído de *outliers* extremos que poderiam distorcer a análise.
+* A visualização dos dados foca nos "95% inferiores", indicando tratamento para remover o ruído de *outliers* extremos que poderiam distorcer a análise.
 
 ---
 
@@ -327,6 +323,36 @@ Os autores do estudo dividem as tarefas de implementação dos scripts, execuç�
 ### 18.1 Repositórios e convenções
 Armazenamento dos dados brutos em JSON e dados processados em CSV.
 
+Aqui está a **versão simplificada**, consolidada em **uma única seção**, com menos itens e mantendo apenas o essencial:
+
+---
+
+## **18.2 Templates e artefatos padrão**
+
+O experimento utiliza um conjunto reduzido e padronizado de artefatos para garantir reprodutibilidade e consistência dos processos. Os principais são:
+
+### **1. Checklists e modelos**
+
+* **Checklist de Preparação do Ambiente:** valida instalação e configuração de Python, Git e SonarQube.
+* **Template de Validação dos Dados:** usado para verificar integridade dos CSVs gerados.
+
+---
+
+### **2. Scripts principais**
+
+* **Coleta e Mineração (`miner_github.py`)** – consulta a API e aplica filtros.
+* **Classificação das Releases (`process_releases.py`)** – calcula medianas e define RR ou SR.
+* **Clonagem e Análise (`clone_and_scan.py`)** – clona repositórios e executa o SonarQube.
+* **Exportação de Métricas (`export_metrics.py`)** – gera arquivos CSV finais.
+* 
+---
+
+### **3. Artefatos de dados**
+
+* **Dataset JSON com repositórios filtrados**
+* **CSV final das métricas de qualidade**
+* **Template padrão do SonarQube (`sonar-project.properties`)**
+
 ### 18.3 Plano de empacotamento
 A metodologia é descrita detalhadamente (parâmetros de filtro, ferramentas usadas) para permitir que outros pesquisadores repliquem a mineração e análise.
 
@@ -335,16 +361,7 @@ A metodologia é descrita detalhadamente (parâmetros de filtro, ferramentas usa
 ## 19. Plano de comunicação
 
 ### 19.1 Públicos e mensagens-chave
-O estudo visa comunicar à comunidade de engenharia de software que, embora *releases* rápidas sejam tendência, elas exigem maior cuidado com a dívida técnica e bugs do que estratégias mais conservadoras.
+O estudo visa comunicar à comunidade de engenharia de software que tende a cada vez mais agilizar os ciclos de desenvolvimento, mostrando qual que é o verdadeiro efeito que o tempo de desenvolvimento tem sobre o código.
 
 ### 19.2 Canais
-Publicação de artigo em conferência/periódico acadêmico.
-
----
-
-## 20. Critérios de prontidão para execução
-
-### 20.1 Checklist de prontidão
-* Scripts de automação validados.
-* Critérios de classificação (5-35 dias vs 50+ dias) definidos.
-* Ambiente de análise estática operacional.
+Publicação de artigo em conferência/periódico acadêmico ~~através da apresentação do trabalho interdisciplinar 6~~.
